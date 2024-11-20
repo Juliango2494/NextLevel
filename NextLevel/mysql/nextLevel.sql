@@ -26,7 +26,9 @@ precio int,
 descripcion varchar (100),
 unidades int,
 categoria int, 
-foreign key (categoria) references Categoria (id_categoria));
+foreign key (categoria) references Categoria (id_categoria),
+imagen blob
+);
 
 drop table productos;
 select * from productos;
