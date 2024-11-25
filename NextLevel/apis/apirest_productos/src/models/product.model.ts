@@ -4,5 +4,5 @@ export interface Product {
   cat: string;
   description: string;
   price: number;
-  sourceUrl: string
+  image: Buffer
 }

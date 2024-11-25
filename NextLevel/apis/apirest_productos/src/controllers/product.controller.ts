@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Product } from "../models/product.model";
 import * as productsService from "../services/products.service";
 
+
 export const getProducts = async (
   req: Request,
   res: Response
@@ -20,10 +21,52 @@ export const getProduct = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
     const product = await productsService.findById(id);
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json({
+      ...product,
+      image: product.image.toString("base64"), // Codifica el blob a Base64
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+/*export const getProduct = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const product = await productsService.findById(id);
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
     res.json(product);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};*/
+
+export const createProduct = async (req: Request, res: Response) => {
+  try {
+    const { name, cat, description, price } = req.body;
+
+    if (!req.file) {
+      return res.status(400).json({ message: "Image is required" });
+    }
+
+    const imageBuffer = req.file.buffer; // Obtén la imagen como buffer
+    const newProduct = await productsService.create({
+      name,
+      cat,
+      description,
+      price: parseFloat(price),
+      image: imageBuffer, // Almacena la imagen como blob
+    });
+
+    res.status(201).json(newProduct);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Something went wrong" });
@@ -42,7 +85,7 @@ export const getProduct = async (req: Request, res: Response) => {
   }
 };*/
 
-export const createProduct = async (req: Request, res: Response) => {
+/*export const createProduct = async (req: Request, res: Response) => {
   try {
     const { name, cat, description, price } = req.body;
     // Verifica si el archivo fue subido
@@ -50,7 +93,7 @@ export const createProduct = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Image is required" });
     }
     // Construye la ruta de la imagen
-    const sourceUrl = `./assets/img_products/${req.file.filename}`;
+    const sourceUrl = `../apis/apirest_productos/src/assets/img_products/${req.file.filename}`;
     // Crea el producto
     const newProduct = await productsService.create({
       name,
@@ -64,7 +107,7 @@ export const createProduct = async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({ message: "Something went wrong" });
   }
-};
+};*/
 
 export const updateProduct = async (req: Request, res: Response) => {
   try {

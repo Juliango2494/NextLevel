@@ -30,14 +30,16 @@ const express_1 = require("express");
 const multer_1 = __importDefault(require("multer"));
 const productsCtrl = __importStar(require("../controllers/product.controller"));
 // Configuración de multer
-const storage = multer_1.default.diskStorage({
-    destination: "./assets/img_products/",
+/*const storage = multer.diskStorage({
+    destination: "../apis/apirest_productos/src/assets/img_products/", // Carpeta donde se guardarán las imágenes
     filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-        cb(null, `${uniqueSuffix}-${file.originalname}`);
+      const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+      cb(null, `${uniqueSuffix}-${file.originalname}`);
     },
-});
-const upload = (0, multer_1.default)({ storage });
+  });
+  
+  const upload = multer({ storage });*/
+const upload = (0, multer_1.default)({ storage: multer_1.default.memoryStorage() }); // Almacena en memoria
 const router = (0, express_1.Router)();
 // GET all products
 router.get("/", productsCtrl.getProducts);

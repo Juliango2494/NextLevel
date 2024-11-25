@@ -1,14 +1,18 @@
 import express from 'express';
-import cors from 'cors'; // Importa cors
 import productsRouter from './routes/products.route';
+import dotenv from 'dotenv';
+import cors from 'cors'; // Importa cors
+
+dotenv.config();
+
 
 const app = express();
 
 // Configurar CORS
-app.use(cors({ origin: 'http://127.0.0.1:5500' }));
+app.use(cors());
 
 app.use(express.json());
 
-app.use('/api/products', productsRouter);
+app.use('/api/proyectoproductos', productsRouter);
 
 export default app;

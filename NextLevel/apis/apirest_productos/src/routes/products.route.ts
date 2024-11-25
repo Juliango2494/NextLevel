@@ -3,15 +3,17 @@ import multer from "multer";
 import * as productsCtrl from "../controllers/product.controller";
 
 // Configuración de multer
-const storage = multer.diskStorage({
-    destination: "./assets/img_products/", // Carpeta donde se guardarán las imágenes
+/*const storage = multer.diskStorage({
+    destination: "../apis/apirest_productos/src/assets/img_products/", // Carpeta donde se guardarán las imágenes
     filename: (req, file, cb) => {
       const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
       cb(null, `${uniqueSuffix}-${file.originalname}`);
     },
   });
   
-  const upload = multer({ storage });
+  const upload = multer({ storage });*/
+
+const upload = multer({ storage: multer.memoryStorage() }); // Almacena en memoria
 
 const router = Router();
 

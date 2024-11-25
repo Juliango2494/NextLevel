@@ -42,27 +42,38 @@
   <div id="productList"></div>
 
   <script>
-    const API_URL = 'http://localhost:3000/api/products';
+    const API_URL = 'http://localhost:3000/api/proyectoproductos';
 
     // Función para obtener productos
     async function fetchProducts() {
-      const response = await fetch(API_URL);
-      const products = await response.json();
-      const productList = document.getElementById('productList');
-      productList.innerHTML = ''; // Limpiar contenido anterior
+      try {
+        const response = await fetch(API_URL);
+        const products = await response.json();
+        console.log(products); // Verificar la estructura de los datos recibidos
+        
+        if (!Array.isArray(products)) {
+          console.error("La respuesta no es un arreglo:", products);
+          return;
+        }
 
-      products.forEach(product => {
-        const productDiv = document.createElement('div');
-        productDiv.classList.add('product');
-        productDiv.innerHTML = `
-          <h3>${product.name}</h3>
-          <p><strong>Categoría:</strong> ${product.cat}</p>
-          <p><strong>Descripción:</strong> ${product.description}</p>
-          <p><strong>Precio:</strong> $${product.price.toFixed(2)}</p>
-          <img src="${product.sourceUrl}" alt="${product.name}" />
-        `;
-        productList.appendChild(productDiv);
-      });
+        const productList = document.getElementById('productList');
+        productList.innerHTML = ''; // Limpiar contenido anterior
+
+        products.forEach(product => {
+          const productDiv = document.createElement('div');
+          productDiv.classList.add('product');
+          productDiv.innerHTML = `
+            <h3>${product.name}</h3>
+            <p><strong>Categoría:</strong> ${product.cat}</p>
+            <p><strong>Descripción:</strong> ${product.description}</p>
+            <p><strong>Precio:</strong> $${product.price.toFixed(2)}</p>
+            <img src="data:image/jpeg;base64,${product.image}" alt="${product.name}" />
+          `;
+          productList.appendChild(productDiv);
+        });
+      } catch (error) {
+        console.error("Error al obtener los productos:", error);
+      }
     }
 
     // Función para crear un producto

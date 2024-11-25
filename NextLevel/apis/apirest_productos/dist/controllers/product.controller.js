@@ -53,7 +53,7 @@ const getProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         if (!product) {
             return res.status(404).json({ message: "Product not found" });
         }
-        res.json(product);
+        res.json(Object.assign(Object.assign({}, product), { image: product.image.toString("base64") }));
     }
     catch (error) {
         console.error(error);
@@ -61,6 +61,41 @@ const getProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.getProduct = getProduct;
+/*export const getProduct = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const product = await productsService.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.json(product);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};*/
+const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { name, cat, description, price } = req.body;
+        if (!req.file) {
+            return res.status(400).json({ message: "Image is required" });
+        }
+        const imageBuffer = req.file.buffer; // Obtén la imagen como buffer
+        const newProduct = yield productsService.create({
+            name,
+            cat,
+            description,
+            price: parseFloat(price),
+            image: imageBuffer, // Almacena la imagen como blob
+        });
+        res.status(201).json(newProduct);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+});
+exports.createProduct = createProduct;
 /*export const createProduct = async (req: Request, res: Response) => {
   try {
     const { name,cat, description, price, sourceUrl } = req.body;
@@ -72,31 +107,29 @@ exports.getProduct = getProduct;
     res.status(500).json({ message: "Something went wrong" });
   }
 };*/
-const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { name, cat, description, price } = req.body;
-        // Verifica si el archivo fue subido
-        if (!req.file) {
-            return res.status(400).json({ message: "Image is required" });
-        }
-        // Construye la ruta de la imagen
-        const sourceUrl = `./assets/img_products/${req.file.filename}`;
-        // Crea el producto
-        const newProduct = yield productsService.create({
-            name,
-            cat,
-            description,
-            price: parseFloat(price),
-            sourceUrl,
-        });
-        res.status(201).json(newProduct);
+/*export const createProduct = async (req: Request, res: Response) => {
+  try {
+    const { name, cat, description, price } = req.body;
+    // Verifica si el archivo fue subido
+    if (!req.file) {
+      return res.status(400).json({ message: "Image is required" });
     }
-    catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Something went wrong" });
-    }
-});
-exports.createProduct = createProduct;
+    // Construye la ruta de la imagen
+    const sourceUrl = `../apis/apirest_productos/src/assets/img_products/${req.file.filename}`;
+    // Crea el producto
+    const newProduct = await productsService.create({
+      name,
+      cat,
+      description,
+      price: parseFloat(price),
+      sourceUrl,
+    });
+    res.status(201).json(newProduct);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};*/
 const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.id;
