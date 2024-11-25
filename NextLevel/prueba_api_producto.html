@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Productos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    form {
+      margin-bottom: 20px;
+    }
+    .product {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    img {
+      max-width: 100px;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Gestión de Productos</h1>
+
+  <!-- Formulario para crear un producto -->
+  <form id="productForm" enctype="multipart/form-data">
+    <h2>Crear Producto</h2>
+    <input type="text" name="name" placeholder="Nombre" required /><br><br>
+    <input type="text" name="cat" placeholder="Categoría" required /><br><br>
+    <textarea name="description" placeholder="Descripción" required></textarea><br><br>
+    <input type="number" name="price" placeholder="Precio" required /><br><br>
+    <input type="file" name="image" accept="image/*" required /><br><br>
+    <button type="submit">Crear Producto</button>
+  </form>
+
+  <!-- Contenedor para mostrar los productos -->
+  <h2>Productos</h2>
+  <div id="productList"></div>
+
+  <script>
+    const API_URL = 'http://localhost:3000/api/products';
+
+    // Función para obtener productos
+    async function fetchProducts() {
+      const response = await fetch(API_URL);
+      const products = await response.json();
+      const productList = document.getElementById('productList');
+      productList.innerHTML = ''; // Limpiar contenido anterior
+
+      products.forEach(product => {
+        const productDiv = document.createElement('div');
+        productDiv.classList.add('product');
+        productDiv.innerHTML = `
+          <h3>${product.name}</h3>
+          <p><strong>Categoría:</strong> ${product.cat}</p>
+          <p><strong>Descripción:</strong> ${product.description}</p>
+          <p><strong>Precio:</strong> $${product.price.toFixed(2)}</p>
+          <img src="${product.sourceUrl}" alt="${product.name}" />
+        `;
+        productList.appendChild(productDiv);
+      });
+    }
+
+    // Función para crear un producto
+    document.getElementById('productForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(event.target); // Crear FormData del formulario
+
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        alert('Producto creado exitosamente!');
+        event.target.reset(); // Reiniciar formulario
+        fetchProducts(); // Actualizar lista de productos
+      } else {
+        alert('Error al crear producto');
+      }
+    });
+
+    // Cargar productos al iniciar
+    fetchProducts();
+  </script>
+</body>
+</html>
