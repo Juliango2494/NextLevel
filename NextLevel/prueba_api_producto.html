@@ -42,7 +42,7 @@
   <div id="productList"></div>
 
   <script>
-    const API_URL = 'http://localhost:3000/api/proyectoproductos';
+    const API_URL = 'http://localhost:3000/products';
 
     // Función para obtener productos
     async function fetchProducts() {
@@ -66,7 +66,7 @@
             <h3>${product.name}</h3>
             <p><strong>Categoría:</strong> ${product.cat}</p>
             <p><strong>Descripción:</strong> ${product.description}</p>
-            <p><strong>Precio:</strong> $${product.price.toFixed(2)}</p>
+            <p><strong>Precio:</strong> $${Number(product.price).toFixed(2)}</p>
             <img src="data:image/jpeg;base64,${product.image}" alt="${product.name}" />
           `;
           productList.appendChild(productDiv);
