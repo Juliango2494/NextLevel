@@ -34,17 +34,33 @@ export const getProductById = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { id } = req.params; 
+    const { id } = req.params;
+
     const [rows] = await db.query<RowDataPacket[]>(
       "SELECT * FROM products WHERE id = ?",
       [id]
     );
+
     if (rows.length === 0) {
       res.status(404).json({ message: "Producto no encontrado" });
       return;
     }
-    res.json(rows[0]);
+
+    const product = rows[0];
+
+    // Convertir la imagen (BLOB) a base64 si está presente
+    const productWithBase64Image = {
+      id: product.id,
+      name: product.name_p,
+      category: product.category,
+      description: product.description_p,
+      price: product.price,
+      image: product.image ? Buffer.from(product.image).toString("base64") : null,
+    };
+
+    res.json(productWithBase64Image);
   } catch (error) {
+    console.error("Error al obtener el producto:", error);
     res.status(500).json({ message: "Error al obtener el producto", error });
   }
 };
