@@ -100,14 +100,19 @@ export const updateProduct = async (
   res: Response
 ): Promise<void> => {
   const { id } = req.params; // Obtenemos el ID del producto desde los parámetros
-  const { name_p, category, description_p, price, image } = req.body; // Obtenemos los datos del cuerpo de la solicitud
+  const { name_p, category, description_p, price } = req.body; // Obtenemos los datos del cuerpo de la solicitud
+  const image = req.file?.filename; // Obtener la imagen si se subió una nueva
 
   try {
-    // Ejecutamos la consulta de actualización
-    const [result] = await db.query<ResultSetHeader>(
-      "UPDATE products SET name_p = ?, category = ?, description_p = ?, price = ?, image = ? WHERE id = ?",
-      [name_p, category, description_p, price, image, id]
-    );
+    // Consulta para actualizar, omitiendo la imagen si no se subió una nueva
+    const query = image
+      ? "UPDATE products SET name_p = ?, category = ?, description_p = ?, price = ?, image = ? WHERE id = ?"
+      : "UPDATE products SET name_p = ?, category = ?, description_p = ?, price = ? WHERE id = ?";
+    const params = image
+      ? [name_p, category, description_p, price, image, id]
+      : [name_p, category, description_p, price, id];
+
+    const [result] = await db.query<ResultSetHeader>(query, params);
 
     // Verificamos si la consulta afectó alguna fila
     if (result.affectedRows === 0) {

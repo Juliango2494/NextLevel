@@ -275,12 +275,15 @@ button {
 
   #productList {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
+    margin: 1%;
   }
 
   .card {
     width: 200px;
+    min-height: 250px;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 10px;
@@ -349,8 +352,9 @@ button {
     background-color: #ddd;
   }
 
+ 
   #modal {
-    display: none;
+    display: none; /* Se asegura que esté oculto inicialmente */
     position: fixed;
     top: 50%;
     left: 50%;
@@ -360,7 +364,9 @@ button {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1000;
     border-radius: 8px;
-  }
+    width: 90%; /* Ajustar según el tamaño del contenido */
+    max-width: 500px; /* Limita el tamaño máximo */
+}
 
   #modal form {
     display: flex;
@@ -369,15 +375,15 @@ button {
   }
 
   #modal-overlay {
-    display: none;
+    display: none; /* Oculto inicialmente */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-  }
+    background-color: rgba(0, 0, 0, 0.5); /* Oscurece el fondo */
+    z-index: 999; /* Detrás del modal */
+}
   .tiendaContainer{
     background-color: #aaa;
   }
