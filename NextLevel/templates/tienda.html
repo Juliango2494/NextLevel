@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=div, initial-scale=1.0">
     
     <link rel="stylesheet" href="/styles/estilos.css">
+    <link rel="stylesheet" href="/styles/tienda.css">
     <title>Document</title>
 </head>
 <body>
@@ -34,15 +35,14 @@
         </div>
     </div>
     <section class="pt-tienda1">
-        <div class="dropdown">
-            <button class="dropbtn">Productos</button>
-            <div class="dropdown-content">
-              <a href="/templates/sillasgamer.html">Sillas Gamer</a>
-              <a href="/templates/mouse.html">Mouse</a>
-              <a href="#">Teclados</a>
-              <a href="#">Diademas</a>
-              <a href="#">Pad Mouse</a>
-            </div>
+        <div class="dropdownTienda">
+            <label for="product-select">Productos:</label>
+            <select id="product-select">
+                <option value="Todos-productos">Todos los productos</option>
+                <option value="sillas-gamer">Sillas Gamer</option>
+                <option value="equipos">Equipos</option>
+                <option value="accesorios">Accesorios</option>
+            </select>
         </div>
         <div class="navegacion">
             <input class="lupa" type="text" placeholder="BUSQUEDA DE PRODUCTOS">
@@ -50,45 +50,30 @@
     </section>
     <section class="pt-tienda2">
         <div>
-            <div class="producto">
-                <img src="/assets/img/relleno1.webp" alt="">
-                <button class="ver"><a href="">Ver Mas</a></button>
+            <div id="productList">
+                <div class="Tiendacard add-card" id="addProductCard">+</div>
             </div>
-            <div class="producto">
-                <img src="/assets/img/relleno1.webp" alt="">
-                <button class="ver">Ver Mas</button>
-            </div>
-            <div class="producto">
-                <img src="/assets/img/relleno1.webp" alt="">
-                <button class="ver">Ver Mas</button>
-            </div>
-            <div class="producto">
-                <img src="/assets/img/relleno1.webp" alt="">
-                <button class="ver">Ver Mas</button>
-            </div>
-            <div class="producto">
-                <img src="/assets/img/relleno1.webp" alt="">
-                <button class="ver">Ver Mas</button>
-            </div>
-            <div class="producto">
-                <img src="/assets/img/relleno1.webp" alt="">
-                <button class="ver">Ver Mas</button>
-            </div>
-            <div class="producto">
-                <img src="/assets/img/relleno1.webp" alt="">
-                <button class="ver">Ver Mas</button>
-            </div>
-            <div class="producto">
-                <img src="/assets/img/relleno1.webp" alt="">
-                <button class="ver">Ver Mas</button>
+            <!-- Modal para crear producto -->
+            <div id="modal-overlay"></div>
+            <div id="modal">
+                <form id="productForm" enctype="multipart/form-data">
+                <h2>Crear Producto</h2>
+                <input type="text" name="name" placeholder="Nombre" required />
+                <input type="text" name="cat" placeholder="Categoría" required />
+                <textarea name="description" placeholder="Descripción" required></textarea>
+                <input type="number" name="price" placeholder="Precio" required />
+                <input type="file" name="image" accept="image/*" required />
+                <button type="submit">Crear Producto</button>
+                </form>
             </div>
         </div>
        
-
+                    
     </section>
       
     <footer>
     derechosReservadosNext_Level&copf;        
     </footer>
+    <script src="/src/producto.js"></script>
 </body>
 </html>
