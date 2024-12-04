@@ -1,0 +1,29 @@
+{
+  "name": "apiLogAdm",
+  "version": "1.0.0",
+  "description": "API de autenticación y registro de usuarios",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "serve": "node dist/index.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.3",
+    "express": "^4.21.1",
+    "helmet": "^6.0.1",
+    "jwt-simple": "^0.5.6",
+    "mysql2": "^3.5.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/express": "^5.0.0",
+    "@types/helmet": "^0.0.47",
+    "@types/jwt-simple": "^0.5.4",
+    "@types/node": "^18.0.0",
+    "typescript": "^5.7.2"
+  },
+  "author": "",
+  "license": "ISC"
+}
