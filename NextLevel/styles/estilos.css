@@ -279,7 +279,7 @@ button {
     gap: 20px;
   }
 
-  .Tiendacard {
+  .card {
     width: 200px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -295,18 +295,18 @@ button {
     
   }
 
-  .Tiendacard:hover {
+  .card:hover {
     transform: scale(1.05);
   }
 
-  .Tiendacard img {
+  .card img {
     max-width: 100%;
     height: auto;
     border-radius: 4px;
     margin-bottom: 10px;
   }
 
-  .Tiendacard .actions {
+  .card .actions {
     display: none;
     position: absolute;
     bottom: 10px;
@@ -314,24 +314,24 @@ button {
     transform: translateX(-50%);
   }
 
-  .Tiendacard:hover .actions {
+  .card:hover .actions {
     display: flex;
     gap: 5px;
   }
 
-  .Tiendacard .actions button {
+  .card .actions button {
     padding: 5px 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
   }
 
-  .Tiendacard .actions .edit {
+  .card .actions .edit {
     background-color: #007bff;
     color: white;
   }
 
-  .Tiendacard .actions .delete {
+  .card .actions .delete {
     background-color: #dc3545;
     color: white;
   }
