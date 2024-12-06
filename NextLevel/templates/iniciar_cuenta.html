@@ -35,19 +35,22 @@
     </div>
     <section class="usuario">
         <div class="container">
-            <h1>Iniciar Sesion </h1>
+            <h1>Crear cuenta </h1>
                 <form>
-                    
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>   
+            
                     <label for="email">Correo electrónico:</label>
                     <input type="email" id="email" name="email" required>
             
                     <label for="password">Contraseña:</label>   
-            
+                    <input type="password" id="password" name="password" required>
+
+                    <label for="password">Confirma contraseña:</label>   
                     <input type="password" id="password" name="password" required>
             
-                    <button type="submit">Ingresar</button>
+                    <button type="submit">Registrar Cuenta</button>
                 </form>
-                <a class="iniciar_cuenta" href="iniciar_cuenta.html">¿Aun no tienes cuenta?</a>
             </div>   
             
     </section>
