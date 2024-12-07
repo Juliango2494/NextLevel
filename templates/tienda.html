@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Doto:wght@100..900&family=New+Amsterdam&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=div, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="/styles/estilos.css">
+    
+    <title>Document</title>
+</head>
+<body>
+    <div class="nombre">
+        <h1 class="next">NEXT_LEVEL</h1>
+    </div>
+    <div class="primera-parte">
+        <div class="imagen-logo">
+            <img class="logo1" src="/assets/img/logo1.png" alt="">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/index.html">HOME</a></li>
+                <li><a href="tienda.html">TIENDA</a></li>
+                <li><a href="">EVENTOS</a></li>
+                <li><a href="">ACCEDE A CONTENIDO EXCLUSIVO</a></li>
+            </ul>
+        </nav>
+        <div class="logos-nav">
+            <a href="/templates/carrito.html"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a href="/templates/usuario.html"><i class="fa-regular fa-user"></i></a>
+
+        </div>
+    </div>
+    <section class="pt-tienda1">
+        <div class="dropdownTienda">
+            <label for="product-select">Productos:</label>
+            <select id="product-select">
+                <option value="Todos-productos">Todos los productos</option>
+                <option value="sillas-gamer">Sillas Gamer</option>
+                <option value="equipos">Equipos</option>
+                <option value="accesorios">Accesorios</option>
+            </select>
+        </div>
+        <div class="navegacion">
+            <input class="lupa" type="text" placeholder="BUSQUEDA DE PRODUCTOS">
+        </div>
+    </section>
+    <section class="pt-tienda2">
+        <div class="tiendaContainer">
+            <div id="productList">
+                <div class="card add-card" id="addProductCard">+</div>
+            </div>
+            <!-- Modal para crear producto -->
+            <div id="modal-overlay"></div>
+            <div id="modal">
+                <form id="productForm" enctype="multipart/form-data">
+                <h2>Crear Producto</h2>
+                <input type="text" name="name" placeholder="Nombre" required />
+                <input type="text" name="cat" placeholder="Categoría" required />
+                <textarea name="description" placeholder="Descripción" required></textarea>
+                <input type="number" name="price" placeholder="Precio" required />
+                <input type="file" name="image" accept="image/*" required />
+                <button type="submit">Crear Producto</button>
+                </form>
+            </div>
+        </div>
+       
+                    
+    </section>
+      
+    <footer>
+    derechosReservadosNext_Level&copf;        
+    </footer>
+    <script src="/src/producto.js"></script>
+</body>
+</html>
