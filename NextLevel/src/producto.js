@@ -93,6 +93,34 @@ let rolUsr = 'usuario'
                     let currentValue = parseInt(quantityInput.value, 10);
                     quantityInput.value = currentValue + 1;
                 });
+                // Evento para el botón "Comprar"
+                const comprarButton = card.querySelector('.comprar');
+                comprarButton.addEventListener('click', () => {
+                    const productId = product.id;
+                    const productName = product.name;
+                    const productPrice = product.price;
+                    const productQuantity = parseInt(quantityInput.value, 10);
+
+                    // Crear un objeto con la información de la compra
+                    const purchase = {
+                        id: productId,
+                        name: productName,
+                        price: productPrice,
+                        quantity: productQuantity,
+                        total: (productPrice * productQuantity).toFixed(2),
+                    };
+
+                    // Obtener compras existentes del Local Storage
+                    const existingPurchases = JSON.parse(localStorage.getItem('cart')) || [];
+
+                    // Agregar el producto al carrito
+                    existingPurchases.push(purchase);
+
+                    // Guardar el carrito actualizado en el Local Storage
+                    localStorage.setItem('cart', JSON.stringify(existingPurchases));
+
+                    alert(`Producto "${productName}" agregado al carrito.`);
+                });
                 break;
             };
           } catch(error) {

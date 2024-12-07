@@ -6,10 +6,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Abel&family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Doto:wght@100..900&family=New+Amsterdam&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=div, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" href="/styles/estilos.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="/styles/Cristopher.css">
+    <title>Carrito de Compras</title>
 </head>
 <body>
     <div class="nombre">
@@ -33,37 +34,38 @@
         </div>
     </div>
     <section>
-        <div class="cart-container">
+        <div class="carrito_contenedor">
             <h2>Tu Carrito de Compras</h2>
             <div class="cart-items">
-                <div class="cart-item">
-                    <img src="https://via.placeholder.com/100" alt="Producto 1">
-                    <div class="item-details">
-                        <h3>Producto 1</h3>
-                        <p>Cantidad: <span>2</span></p>
-                        <p>Precio: <span>$20.00</span></p>
-                    </div>
-                    <button class="remove-btn">Eliminar</button>
-                </div>
-                <div class="cart-item">
-                    <img src="https://via.placeholder.com/100" alt="Producto 2">
-                    <div class="item-details">
-                        <h3>Producto 2</h3>
-                        <p>Cantidad: <span>1</span></p>
-                        <p>Precio: <span>$15.00</span></p>
-                    </div>
-                    <button class="remove-btn">Eliminar</button>
-                </div>
+                <!-- Productos del carrito -->
             </div>
-    
-            <div class="cart-total">
-                <h3>Total: <span>$55.00</span></h3>
-                <button class="checkout-btn">Pagar</button>
+            <div class="carrito_total">
+                <h3>Subtotal: <span class="subtotal">$0.00</span></h3>
+                <h3>IVA (21%): <span class="iva">$0.00</span></h3>
+                <h3>Total: <span class="total">$0.00</span></h3>
+            </div>
+            <button class="carrito_boton empty-cart-btn">Vaciar Carrito</button>
+            <button class="carrito_boton checkout-btn">Comprar</button>
+        </div>
+
+        <!-- Modal de Pago -->
+        <div class="carrito_modal">
+            <div class="carrito_modal-contenido">
+                <button class="carrito_boton-cerrar">×</button>
+                <h2>Finalizar Compra</h2>
+                <div class="carrito_resumen">
+                    <!-- Resumen de la compra -->
+                </div>
+                <div class="carrito_botones-accion">
+                    <button class="carrito_boton carrito_boton-comprar">Confirmar Compra</button>
+                    <button class="carrito_boton carrito_boton-cancelar">Cancelar</button>
+                </div>
             </div>
         </div>
     </section>
     <footer>
-        derechosReservadosNext_Level&copf;        
+        derechosReservadosNext_Level&copy;
     </footer>
+    <script src="/scripts/carrito.js"></script>
 </body>
 </html>
