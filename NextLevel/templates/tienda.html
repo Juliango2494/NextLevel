@@ -58,16 +58,19 @@
                 <form id="productForm" enctype="multipart/form-data">
                 <h2>Crear Producto</h2>
                 <input type="text" name="name" placeholder="Nombre" required />
-                <input type="text" name="cat" placeholder="Categoría" required />
+                <select name="cat" required>
+                    <option value="" disabled selected>Seleccione una categoría</option>
+                    <option value="sillas-gamer">Sillas Gamer</option>
+                    <option value="accesorios">Accesorios</option>
+                    <option value="equipos">Equipos</option>
+                </select>
                 <textarea name="description" placeholder="Descripción" required></textarea>
                 <input type="number" name="price" placeholder="Precio" required />
                 <input type="file" name="image" accept="image/*" required />
                 <button type="submit">Crear Producto</button>
                 </form>
             </div>
-        </div>
-       
-                    
+        </div>    
     </section>
       
     <footer>

@@ -1,5 +1,7 @@
 const API_URL = 'http://localhost:3000/products';
 
+let rolUsr = 'usuario'
+
     // Mostrar el modal
     const modal = document.getElementById('modal');
     const overlay = document.getElementById('modal-overlay');
@@ -26,104 +28,129 @@ const API_URL = 'http://localhost:3000/products';
         productList.innerHTML = ''; // Limpiar el contenedor
     
         // Agregar la card vacía con "+"
-        const addCard = document.createElement('div');
-        addCard.classList.add('card', 'add-card');
-        addCard.textContent = '+';
-        addCard.addEventListener('click', () => {
-          resetForm(); // Limpia el formulario antes de mostrarlo
-          showModal();
-        });
-        productList.appendChild(addCard);
+        if(rolUsr==='administrador'){
+          const addCard = document.createElement('div');
+          addCard.classList.add('card', 'add-card');
+          addCard.textContent = '+';
+          addCard.addEventListener('click', () => {
+            resetForm(); // Limpia el formulario antes de mostrarlo
+            showModal();
+          });
+          productList.appendChild(addCard);
+        }
     
         // Renderizar las cards de productos
         products.forEach(product => {
           const card = document.createElement('div');
           card.classList.add('card');
-          card.innerHTML = `
-            <img src="data:image/jpeg;base64,${product.image}" alt="${product.name}" />
-            <h3>${product.name}</h3>
-            <p>${product.cat}</p>
-            <p>${product.description}</p>
-            <p>$${Number(product.price).toFixed(2)}</p>
-            <div class="actions">
-              <button class="edit" data-id="${product.id}">Editar</button>
-              <button class="delete" data-id="${product.id}">Eliminar</button>
-            </div>
-          `;
-    
+          try{
+            switch(rolUsr){
+              case 'administrador':
+                console.log("Renderizando card 'administrador'")
+                card.innerHTML = `
+                  <img src="data:image/jpeg;base64,${product.image}" alt="${product.name}" />
+                  <h3>${product.name}</h3><br>
+                  <p>categoría: ${product.cat}</p><br>
+                  <p>${product.description}</p><br>
+                  <p>$${Number(product.price).toFixed(2)}</p><br><br>
+                  <div class="actions">
+                    <button class="edit" data-id="${product.id}">Editar</button>
+                    <button class="delete" data-id="${product.id}">Eliminar</button>
+                  </div>
+                `;
+                break;
+              case 'usuario':
+                console.log("Renderizando card 'usuario'")
+                card.innerHTML = `
+                  <img src="data:image/jpeg;base64,${product.image}" alt="${product.name}" />
+                  <h3>${product.name}</h3><br>
+                  <p>categoría: ${product.cat}</p><br>
+                  <p>${product.description}</p><br>
+                  <p>$${Number(product.price).toFixed(2)}</p><br><br>
+                  <button class="edit" data-id="${product.id}">Comprar</button>
+                `;
+                break;
+            };
+          } catch(error) {
+            console.log('Error en tipo de usuario:', error)
+          }
           // Evento para eliminar
-          card.querySelector('.delete').addEventListener('click', async (e) => {
-            const productId = e.target.getAttribute('data-id');
-            const confirmDelete = confirm('¿Está seguro de que desea eliminar este producto?');
-            if (confirmDelete) {
-              try {
-                const response = await fetch(`${API_URL}/${productId}`, { method: 'DELETE' });
-                if (response.ok) {
-                  alert('Producto eliminado correctamente');
-                  fetchProducts(); // Refrescar la lista de productos
-                } else {
-                  alert('Error al eliminar producto');
+          if(rolUsr === 'administrador'){
+            card.querySelector('.delete').addEventListener('click', async (e) => {
+              const productId = e.target.getAttribute('data-id');
+              const confirmDelete = confirm('¿Está seguro de que desea eliminar este producto?');
+              if (confirmDelete) {
+                try {
+                  const response = await fetch(`${API_URL}/${productId}`, { method: 'DELETE' });
+                  if (response.ok) {
+                    alert('Producto eliminado correctamente');
+                    fetchProducts(); // Refrescar la lista de productos
+                  } else {
+                    alert('Error al eliminar producto');
+                  }
+                } catch (error) {
+                  console.error('Error al eliminar producto:', error);
                 }
-              } catch (error) {
-                console.error('Error al eliminar producto:', error);
               }
-            }
-          });
+            });
+          }
     
           // Evento para editar
-          card.querySelector('.edit').addEventListener('click', async (e) => {
-            const productId = e.target.getAttribute('data-id');
-    
-            try {
-              // Obtener los datos del producto por su ID
-              const response = await fetch(`${API_URL}/${productId}`);
-              if (response.ok) {
-                const product = await response.json();
-    
-                // Rellenar el formulario con los datos existentes
-                document.querySelector('[name="name"]').value = product.name;
-                document.querySelector('[name="cat"]').value = product.cat;
-                document.querySelector('[name="description"]').value = product.description;
-                document.querySelector('[name="price"]').value = product.price;
-    
-                // Actualizar el texto del botón
-                const submitButton = document.querySelector('#productForm button[type="submit"]');
-                submitButton.textContent = 'Actualizar Producto';
-    
-                // Mostrar el modal
-                showModal();
-    
-                // Cambiar el evento del formulario
-                const form = document.getElementById('productForm');
-                form.onsubmit = async (event) => {
-                  event.preventDefault();
-                  const formData = new FormData(event.target);
-                
-                  try {
-                    const response = await fetch(`${API_URL}/${productId}`, {
-                      method: 'PUT',
-                      body: formData,
-                    });
-                
-                    if (response.ok) {
-                      alert('Producto actualizado correctamente');
-                      closeModal();
-                      fetchProducts(); // Refrescar la lista de productos
-                    } else {
-                      const errorResponse = await response.json();
-                      alert(`Error al actualizar producto: ${errorResponse.message}`);
+          if(rolUsr === 'administrador'){
+            card.querySelector('.edit').addEventListener('click', async (e) => {
+              const productId = e.target.getAttribute('data-id');
+      
+              try {
+                // Obtener los datos del producto por su ID
+                const response = await fetch(`${API_URL}/${productId}`);
+                if (response.ok) {
+                  const product = await response.json();
+      
+                  // Rellenar el formulario con los datos existentes
+                  document.querySelector('[name="name"]').value = product.name;
+                  document.querySelector('[name="cat"]').value = product.cat;
+                  document.querySelector('[name="description"]').value = product.description;
+                  document.querySelector('[name="price"]').value = product.price;
+      
+                  // Actualizar el texto del botón
+                  const submitButton = document.querySelector('#productForm button[type="submit"]');
+                  submitButton.textContent = 'Actualizar Producto';
+      
+                  // Mostrar el modal
+                  showModal();
+      
+                  // Cambiar el evento del formulario
+                  const form = document.getElementById('productForm');
+                  form.onsubmit = async (event) => {
+                    event.preventDefault();
+                    const formData = new FormData(event.target);
+                  
+                    try {
+                      const response = await fetch(`${API_URL}/${productId}`, {
+                        method: 'PUT',
+                        body: formData,
+                      });
+                  
+                      if (response.ok) {
+                        alert('Producto actualizado correctamente');
+                        closeModal();
+                        fetchProducts(); // Refrescar la lista de productos
+                      } else {
+                        const errorResponse = await response.json();
+                        alert(`Error al actualizar producto: ${errorResponse.message}`);
+                      }
+                    } catch (error) {
+                      console.error('Error al actualizar producto:', error);
                     }
-                  } catch (error) {
-                    console.error('Error al actualizar producto:', error);
-                  }
-                };
-              } else {
-                alert('Error al obtener los datos del producto');
+                  };
+                } else {
+                  alert('Error al obtener los datos del producto');
+                }
+              } catch (error) {
+                console.error('Error al cargar producto para edición:', error);
               }
-            } catch (error) {
-              console.error('Error al cargar producto para edición:', error);
-            }
-          });
+            });
+          }
     
           productList.appendChild(card);
         });

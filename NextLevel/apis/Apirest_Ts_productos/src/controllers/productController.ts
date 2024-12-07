@@ -8,7 +8,7 @@ import { RequestHandler } from "express";
 
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
-    const [rows] = await db.query<RowDataPacket[]>("SELECT * FROM products");
+    const [rows] = await db.query<RowDataPacket[]>("SELECT * FROM productos_tienda");
 
     // Convertir las imágenes BLOB a base64
     const products = rows.map((product) => {
@@ -37,7 +37,7 @@ export const getProductById = async (
     const { id } = req.params;
 
     const [rows] = await db.query<RowDataPacket[]>(
-      "SELECT * FROM products WHERE id = ?",
+      "SELECT * FROM productos_tienda WHERE id = ?",
       [id]
     );
 
@@ -76,7 +76,7 @@ export const createProduct: RequestHandler = async (req, res) => {
 
   try {
     const query =
-      "INSERT INTO products (name_p, category, description_p, price, image) VALUES (?, ?, ?, ?, ?)";
+      "INSERT INTO productos_tienda (name_p, category, description_p, price, image) VALUES (?, ?, ?, ?, ?)";
     const [result] = await db.query<ResultSetHeader>(query, [
       name,
       cat,
@@ -106,8 +106,8 @@ export const updateProduct = async (
   try {
     // Consulta para actualizar, omitiendo la imagen si no se subió una nueva
     const query = image
-      ? "UPDATE products SET name_p = ?, category = ?, description_p = ?, price = ?, image = ? WHERE id = ?"
-      : "UPDATE products SET name_p = ?, category = ?, description_p = ?, price = ? WHERE id = ?";
+      ? "UPDATE productos_tienda SET name_p = ?, category = ?, description_p = ?, price = ?, image = ? WHERE id = ?"
+      : "UPDATE productos_tienda SET name_p = ?, category = ?, description_p = ?, price = ? WHERE id = ?";
     const params = image
       ? [name_p, category, description_p, price, image, id]
       : [name_p, category, description_p, price, id];
@@ -135,7 +135,7 @@ export const updateProduct = async (
     try {
       // Ejecutamos la consulta de eliminación
       const [result] = await db.query<ResultSetHeader>(
-        "DELETE FROM products WHERE id = ?",
+        "DELETE FROM productos_tienda WHERE id = ?",
         [id]
       );
   

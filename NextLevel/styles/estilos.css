@@ -385,5 +385,5 @@ button {
     z-index: 999; /* Detrás del modal */
 }
   .tiendaContainer{
-    background-color: #aaa;
+    background-color: white;
   }
