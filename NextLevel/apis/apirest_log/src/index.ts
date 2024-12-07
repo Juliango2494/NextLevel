@@ -2,6 +2,7 @@ import express from "express";
 import helmet from "helmet";
 import mysql from "mysql2";
 import dotenv from "dotenv";
+import cors from "cors"; 
 import authRoutes from "./routes/authRoutes";
 
 dotenv.config(); // Cargar las variables de entorno
@@ -24,13 +25,21 @@ db.connect((err) => {
   }
 });
 
-app.use(helmet()); // Usar Helmet para mejorar la seguridad
+// Middleware para mejorar la seguridad y procesar JSON
+app.use(helmet());
+app.use(cors()); // Habilitar CORS para permitir solicitudes del frontend
 app.use(express.json()); // Middleware para parsear JSON
 
 // Rutas de autenticación
 app.use("/api/auth", authRoutes);
 
+// Manejo de errores genérico (opcional)
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error(err.stack);
+  res.status(500).send({ message: "Algo salió mal en el servidor." });
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
