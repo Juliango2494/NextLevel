@@ -387,3 +387,37 @@ button {
   .tiendaContainer{
     background-color: white;
   }
+  .card .quantity-selector {
+    display: none;
+    align-items: center;
+    gap: 5px;
+}
+
+.card:hover .quantity-selector {
+    display: flex;
+}
+
+.card .quantity-selector button {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #ddd;
+    color: #333;
+    transition: background-color 0.2s;
+}
+
+.card .quantity-selector button:hover {
+    background-color: #bbb;
+}
+
+.card .quantity-selector .quantity {
+    width: 40px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+}

@@ -1,5 +1,6 @@
 const API_URL = 'http://localhost:3000/products';
 
+//let rolUsr = 'administrador'
 let rolUsr = 'usuario'
 
     // Mostrar el modal
@@ -67,8 +68,31 @@ let rolUsr = 'usuario'
                   <p>categoría: ${product.cat}</p><br>
                   <p>${product.description}</p><br>
                   <p>$${Number(product.price).toFixed(2)}</p><br><br>
-                  <button class="edit" data-id="${product.id}">Comprar</button>
+                  <div class="quantity-selector">
+                    <button class="decrease">-</button>
+                    <input type="number" class="quantity" value="1" min="1" readonly />
+                    <button class="increase">+</button>
+                  </div><br>
+                  <div class="actions">
+                      <button class="comprar" data-id="${product.id}">Comprar</button>
+                  </div>
                 `;
+                // Eventos para los botones de aumentar y disminuir cantidad
+                const decreaseButton = card.querySelector('.decrease');
+                const increaseButton = card.querySelector('.increase');
+                const quantityInput = card.querySelector('.quantity');
+
+                decreaseButton.addEventListener('click', () => {
+                    let currentValue = parseInt(quantityInput.value, 10);
+                    if (currentValue > 1) {
+                        quantityInput.value = currentValue - 1;
+                    }
+                });
+
+                increaseButton.addEventListener('click', () => {
+                    let currentValue = parseInt(quantityInput.value, 10);
+                    quantityInput.value = currentValue + 1;
+                });
                 break;
             };
           } catch(error) {
