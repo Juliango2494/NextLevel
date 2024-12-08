@@ -1,210 +1,129 @@
-// class Carrito {
-//     constructor() {
-//         this.items = [];
-//         this.cartContainer = document.querySelector('.cart-items');
-//         this.totalElement = document.querySelector('.total');
-//         this.subtotalElement = document.querySelector('.subtotal');
-//         this.ivaElement = document.querySelector('.iva');
-//         this.checkoutButton = document.querySelector('.checkout-btn');
-//         this.emptyCartButton = document.querySelector('.empty-cart-btn');
+// función para añadir efectos visuales y mejorar la experiencia de usuario
+document.addEventListener('DOMContentLoaded', () => {
+    // añadir efectos de animación a los elementos del carrito
+    const cartItems = document.querySelectorAll('.cart-item');
+    cartItems.forEach(item => {
+        // añadir animación de entrada suave
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
         
-//         this.initEventListeners();
-//         this.loadCartFromStorage();
-//     }
+        // usar animación para mostrar elementos
+        setTimeout(() => {
+            item.style.transition = 'all 0.5s ease';
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0)';
+        }, 100);
+    });
 
-//     //inicializar eventos o Configurar eventos
-//     initEventListeners() {
-//         if (this.checkoutButton) {
-//             this.checkoutButton.addEventListener('click', () => this.openCheckoutModal());
-//         }
+    // mejora de interactividad para botones
+    const buttons = document.querySelectorAll('.carrito_boton, .carrito_boton-eliminar');
+    buttons.forEach(button => {
+        // añadir efecto de vibración al hacer clic
+        button.addEventListener('click', () => {
+            button.style.animation = 'vibrate 0.3s';
+            setTimeout(() => {
+                button.style.animation = '';
+            }, 300);
+        });
+    });
 
-//         if (this.emptyCartButton) {
-//             this.emptyCartButton.addEventListener('click', () => this.vaciarCarrito());
-//         }
-//     }
-
-//     //agregar producto al carrito
-//     agregarAlCarrito(producto) {
-//         const productoExistente = this.items.find(item => item.id === producto.id);
-
-//         if (productoExistente) {
-//             productoExistente.cantidad += 1;
-//         } else {
-//             this.items.push({
-//                 ...producto,
-//                 cantidad: 1
-//             });
-//         }
-
-//         this.guardarCarritoEnStorage();
-//         this.mostrarProductosEnCarrito();
-//         this.actualizarTotal();
-//     }
-
-//     //eliminar producto del carrito
-//     eliminarDelCarrito(id) {
-//         const index = this.items.findIndex(item => item.id === id);
-        
-//         if (index !== -1) {
-//             if (this.items[index].cantidad > 1) {
-//                 this.items[index].cantidad -= 1;
-//             } else {
-//                 this.items.splice(index, 1);
-//             }
-//         }
-
-//         this.guardarCarritoEnStorage();
-//         this.mostrarProductosEnCarrito();
-//         this.actualizarTotal();
-//     }
-
-//     //mostrar productos en el carrito
-//     mostrarProductosEnCarrito() {
-//         this.cartContainer.innerHTML = '';
-
-//         this.items.forEach(producto => {
-//             const itemDiv = document.createElement('div');
-//             itemDiv.classList.add('cart-item');
-//             itemDiv.innerHTML = `
-//                 <img src="${producto.imagen}" alt="${producto.nombre}" class="carrito_item-imagen">
-//                 <div class="item-details">
-//                     <h3>${producto.nombre}</h3>
-//                     <p>Categoría: ${producto.categoria}</p>
-//                     <p>Descripción: ${producto.descripcion}</p>
-//                     <p>Precio: $${producto.precio.toFixed(2)}</p>
-//                     <p>Cantidad: <span>${producto.cantidad}</span></p>
-//                     <p>Valor Total: $${(producto.precio * producto.cantidad).toFixed(2)}</p>
-//                 </div>
-//                 <button class="remove-btn carrito_boton-eliminar" data-id="${producto.id}">Eliminar</button>
-//             `;
-
-//             const removeButton = itemDiv.querySelector('.remove-btn');
-//             removeButton.addEventListener('click', () => this.eliminarDelCarrito(producto.id));
-
-//             this.cartContainer.appendChild(itemDiv);
-//         });
-//     }
-
-//     //calcular y actualizar total
-//     actualizarTotal() {
-//         const subtotal = this.items.reduce((total, producto) => total + (producto.precio * producto.cantidad), 0);
-//         const iva = subtotal * 0.21;
-//         const total = subtotal + iva;
-
-//         if (this.subtotalElement) {
-//             this.subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
-//         }
-
-//         if (this.ivaElement) {
-//             this.ivaElement.textContent = `$${iva.toFixed(2)}`;
-//         }
-
-//         if (this.totalElement) {
-//             this.totalElement.textContent = `$${total.toFixed(2)}`;
-//         }
-
-//         //crear desglose detallado
-//         const breakdownDiv = document.createElement('div');
-//         breakdownDiv.classList.add('carrito_total');
-//         breakdownDiv.innerHTML = `
-//             <p>Subtotal: $${subtotal.toFixed(2)}</p>
-//             <p>IVA (21%): $${iva.toFixed(2)}</p>
-//             <p>Total: $${total.toFixed(2)}</p>
-//         `;
-
-//         //reemplazar o agregar el desglose
-//         const existingBreakdown = document.querySelector('.carrito_total');
-//         if (existingBreakdown) {
-//             existingBreakdown.replaceWith(breakdownDiv);
-//         } else {
-//             this.cartContainer.appendChild(breakdownDiv);
-//         }
-//     }
-
-//     //vaciar todo el carrito
-//     vaciarCarrito() {
-//         this.items = [];
-//         this.guardarCarritoEnStorage();
-//         this.mostrarProductosEnCarrito();
-//         this.actualizarTotal();
-//     }
-
-//     //guardar el carrito en el almacenamiento local
-//     guardarCarritoEnStorage() {
-//         localStorage.setItem('carrito', JSON.stringify(this.items));
-//     }
-
-//     //cargar el carrito desde el almacenamiento local
-//     loadCartFromStorage() {
-//         const carritoGuardado = localStorage.getItem('carrito');
-//         if (carritoGuardado) {
-//             this.items = JSON.parse(carritoGuardado);
-//             this.mostrarProductosEnCarrito();
-//             this.actualizarTotal();
-//         }
-//     }
-
-//     //abrir el modal de pago
-//     openCheckoutModal() {
-//         const modal = document.querySelector('.carrito_modal');
-//         modal.style.display = 'flex';
-
-//         const closeButton = modal.querySelector('.carrito_boton-cerrar');
-//         const cancelButton = modal.querySelector('.carrito_boton-cancelar');
-        
-//         const closeModal = () => {
-//             modal.style.display = 'none';
-//         };
-
-//         closeButton.addEventListener('click', closeModal);
-//         cancelButton.addEventListener('click', closeModal);
-
-//         const confirmButton = modal.querySelector('.carrito_boton-comprar');
-//         confirmButton.addEventListener('click', () => {
-//             alert('Compra realizada con éxito');
-//             this.vaciarCarrito();
-//             closeModal();
-//         });
-//     }
-// }
-
-// //inicializar el carrito cuando el DOM esté completamente cargado
-// document.addEventListener('DOMContentLoaded', () => {
-//     const carrito = new Carrito();
-
-//     //ejemplo de cómo agregar un producto
-//     window.agregarAlCarrito = (producto) => {
-//         carrito.agregarAlCarrito(producto);
-//     };
-// });
-
-// COMENTE TODO EL CODIGO PARA VER SI ESTABA VISUALIZANDO BIEN LOS PRODUCTOS CON LO QUE AÑADÍ
-// CARGAR PRODUCTOS DEL LOCAL STORAGE PARA MOSTRAR EN EL CARRITO:
-window.addEventListener('DOMContentLoaded', () => {
-    const cartContainer = document.getElementById('cartItems'); // Contenedor del carrito en el HTML
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    if (cart.length === 0) {
-        cartContainer.innerHTML = '<p>El carrito está vacío.</p>';
-        return;
+    // añadir validación básica antes de comprar
+    const checkoutButton = document.querySelector('.checkout-btn');
+    if (checkoutButton) {
+        checkoutButton.addEventListener('click', () => {
+            const cartItems = JSON.parse(localStorage.getItem('carrito')) || [];
+            
+            // mostrar mensaje si el carrito está vacío
+            if (cartItems.length === 0) {
+                alert('🎮 ¡Carrito vacío! Agrega algunos productos antes de comprar.');
+                return;
+            }
+        });
     }
 
-    cartContainer.innerHTML = ''; // Limpiar contenedor
+    // añadir contador de productos en ícono de carrito
+    const updateCartCounter = () => {
+        const cartItems = JSON.parse(localStorage.getItem('carrito')) || [];
+        const cartIcon = document.querySelector('.fa-cart-shopping');
+        
+        if (cartIcon) {
+            // crear o actualizar contador
+            let badge = cartIcon.querySelector('.cart-badge');
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.classList.add('cart-badge');
+                cartIcon.appendChild(badge);
+            }
+            
+            badge.textContent = cartItems.length;
+            badge.style.cssText = `
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                background-color: var(--accent-color);
+                color: white;
+                border-radius: 50%;
+                padding: 2px 6px;
+                font-size: 10px;
+            `;
+        }
+    };
 
-    cart.forEach(item => {
-        const cartItem = document.createElement('div');
-        cartItem.classList.add('cart-item');
-
-        // Formatear precio y total
-        const formattedPrice = Number(item.price).toFixed(2);
-        const formattedTotal = Number(item.total).toFixed(2);
-
-        cartItem.innerHTML = `
-            <h3>${item.name}</h3>
-            <p>Cantidad: ${item.quantity}</p>
-            <p>Precio unitario: $${formattedPrice}</p>
-            <p>Total: $${formattedTotal}</p>
+    // añadir estilos adicionales para mejorar la experiencia visual
+    const addCustomStyles = () => {
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes vibrate {
+                0% { transform: rotate(0deg); }
+                25% { transform: rotate(-5deg); }
+                50% { transform: rotate(5deg); }
+                75% { transform: rotate(-5deg); }
+                100% { transform: rotate(0deg); }
+            }
+            
+            .cart-badge {
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                background-color: #ff0861;
+                color: white;
+                border-radius: 50%;
+                padding: 2px 6px;
+                font-size: 10px;
+            }
         `;
-        cartContainer.appendChild(cartItem);
-    });
+        document.head.appendChild(style);
+    };
+
+    // ejecutar funciones de mejora
+    updateCartCounter();
+    addCustomStyles();
+
+    // actualizar contador cuando cambia el carrito
+    window.addEventListener('storage', updateCartCounter);
+});
+
+// validaciones adicionales para el formulario de pago (sin modificar el modal anterior)
+document.addEventListener('DOMContentLoaded', () => {
+    const confirmButton = document.querySelector('.carrito_boton-comprar');
+    
+    if (confirmButton) {
+        confirmButton.addEventListener('click', (e) => {
+            // añadir una pequeña validación adicional
+            const cartItems = JSON.parse(localStorage.getItem('carrito')) || [];
+            
+            if (cartItems.length === 0) {
+                e.preventDefault();
+                alert('🎮 No puedes finalizar una compra con el carrito vacío');
+                return;
+            }
+
+            // añadir confirmación adicional
+            const confirmPurchase = confirm('¿Estás seguro de realizar esta compra de productos gamer?');
+            
+            if (!confirmPurchase) {
+                e.preventDefault();
+            }
+        });
+    }
 });
