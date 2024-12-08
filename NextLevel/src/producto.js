@@ -1,7 +1,14 @@
 const API_URL = 'http://localhost:3000/products';
 
-let rolUsr = 'administrador'
-//let rolUsr = 'usuario'
+const usuario = JSON.parse(localStorage.getItem('usuario'));
+
+let rolUsr= 'usuario'
+  
+    // Verificar si hay datos de usuario en localStorage
+    if (usuario){
+      rolUsr=usuario.role 
+    }
+
 let filtro = '';
 // Leer el parámetro de la URL al cargar la página
 const params = new URLSearchParams(window.location.search);
