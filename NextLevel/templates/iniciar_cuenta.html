@@ -34,59 +34,33 @@
         </div>
     </div>
     <section class="usuario">
-        <div class="container">
-            <h1>Crear cuenta </h1>
-            <form id="registerForm">
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required>
-              
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
-              
-                <button type="submit">Registrar Cuenta</button>
-              </form>
-              
-              <script>
-                document.getElementById("registerForm").addEventListener("submit", async function (event) {
-                  event.preventDefault(); // Previene la recarga de la página al enviar el formulario
-              
-                  // Captura los valores de los campos del formulario
-                  const nombre = document.getElementById("nombre").value;
-                  const password = document.getElementById("password").value;
-              
-                  try {
-                    // Envía los datos al servidor usando fetch
-                    const response = await fetch("http://localhost:5000/api/auth/register", {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      body: JSON.stringify({ nombre, password }), // Convierte los datos a JSON
-                    });
-              
-                    // Procesa la respuesta del servidor
-                    if (response.ok) {
-                      const data = await response.json();
-                      alert(data.message); // Muestra el mensaje de éxito del servidor
-                    } else {
-                      // Si ocurre un error en el servidor, muestra un mensaje de error
-                      const errorData = await response.json();
-                      alert(`Error: ${errorData.message}`);
-                    }
-                  } catch (error) {
-                    // Manejo de errores de red o de fetch
-                    console.error("Error al registrar:", error);
-                    alert("Hubo un error al intentar registrar. Por favor, inténtalo de nuevo.");
-                  }
-                });
-              </script>
-              
-              
-            </div>   
+      <div class="container">
+          <h1>Crear cuenta</h1>
+          <form id="registerForm">
+              <label for="id">Identificacion:</label>
+              <input type="text" id="id" name="id" required>
+  
+              <label for="email">Email:</label>
+              <input type="text" id="email" name="email" required>
+  
+              <label for="password">Contraseña:</label>
+              <input type="password" id="password" name="password" required>
+  
+              <label for="confPassword">Confirma la contraseña:</label>
+              <input type="password" id="confPassword" name="confPassword" required>
+  
+              <label for="direccion">Direccion:</label>
+              <input type="text" id="direccion" name="direccion" required>
+  
+              <button type="submit">Registrar Cuenta</button>
+          </form>
+      </div>
+  </section>
             
     </section>
     <footer>
         derechosReservadosNext_Level&copf;        
     </footer>
+    <script src="../src/registro.js"></script>
 </body>
 </html>

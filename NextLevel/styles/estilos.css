@@ -246,7 +246,10 @@ button {
     cursor: pointer;
 }
 .usuario{
+    display: flex;
+    align-items: center;
     background-color: black;
+    min-height: 75vh;
 }
 .MENUS{
     position: fixed;
