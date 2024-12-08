@@ -81,7 +81,7 @@ productSelect.addEventListener('change', (event) => {
                   <p>${product.description}</p><br>
                   <p>$${Number(product.price).toFixed(2)}</p><br><br>
                   <div class="actions">
-                    <button class="edit" data-id="${product.id}">Editar</button>
+                    
                     <button class="delete" data-id="${product.id}">Eliminar</button>
                   </div>
                 `;
@@ -173,62 +173,6 @@ productSelect.addEventListener('change', (event) => {
             });
           }
     
-          // Evento para editar
-          if(rolUsr === 'administrador'){
-            card.querySelector('.edit').addEventListener('click', async (e) => {
-              const productId = e.target.getAttribute('data-id');
-      
-              try {
-                // Obtener los datos del producto por su ID
-                const response = await fetch(`${API_URL}/${productId}`);
-                if (response.ok) {
-                  const product = await response.json();
-      
-                  // Rellenar el formulario con los datos existentes
-                  document.querySelector('[name="name"]').value = product.name;
-                  document.querySelector('[name="cat"]').value = product.cat;
-                  document.querySelector('[name="description"]').value = product.description;
-                  document.querySelector('[name="price"]').value = product.price;
-      
-                  // Actualizar el texto del botón
-                  const submitButton = document.querySelector('#productForm button[type="submit"]');
-                  submitButton.textContent = 'Actualizar Producto';
-      
-                  // Mostrar el modal
-                  showModal();
-      
-                  // Cambiar el evento del formulario
-                  const form = document.getElementById('productForm');
-                  form.onsubmit = async (event) => {
-                    event.preventDefault();
-                    const formData = new FormData(event.target);
-                  
-                    try {
-                      const response = await fetch(`${API_URL}/${productId}`, {
-                        method: 'PUT',
-                        body: formData,
-                      });
-                  
-                      if (response.ok) {
-                        alert('Producto actualizado correctamente');
-                        closeModal();
-                        fetchProducts(); // Refrescar la lista de productos
-                      } else {
-                        const errorResponse = await response.json();
-                        alert(`Error al actualizar producto: ${errorResponse.message}`);
-                      }
-                    } catch (error) {
-                      console.error('Error al actualizar producto:', error);
-                    }
-                  };
-                } else {
-                  alert('Error al obtener los datos del producto');
-                }
-              } catch (error) {
-                console.error('Error al cargar producto para edición:', error);
-              }
-            });
-          }
     
           productList.appendChild(card);
         });

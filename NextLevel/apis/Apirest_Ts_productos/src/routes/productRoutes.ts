@@ -13,6 +13,8 @@ router.get("/equipos", ctrl.getEquipos);
 router.get("/accesorios", ctrl.getAccesorios);
 router.get("/:id", ctrl.getProductById);
 router.post("/", upload.single("image"), ctrl.createProduct);
+router.post("/usuario", ctrl.createUsr);
+router.post("/login", ctrl.loginUsuario);
 router.put("/:id", upload.single("image"), ctrl.updateProduct);
 router.delete("/:id", ctrl.deleteProduct);
 

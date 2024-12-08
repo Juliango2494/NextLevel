@@ -217,3 +217,77 @@ export const updateProduct = async (
       res.status(500).json({ message: "Error al eliminar el producto", error });
     }
   };
+
+  // CONTROLADORES PARA LOGIN DE USUARIOS:
+  export const loginUsuario: RequestHandler = async (req, res) => {
+    try {
+      const { email, password } = req.body; // Email y contraseña ingresados por el usuario
+  
+      // Buscar el usuario por email
+      const [rows] = await db.query<RowDataPacket[]>(
+        "SELECT id, email, usrPassword, direccion, usrRole FROM usuarios WHERE email = ?",
+        [email]
+      );
+  
+      if (rows.length === 0) {
+        res.status(404).json({ message: "Usuario no encontrado" });
+        return; // Asegúrate de terminar aquí para evitar problemas con el flujo
+      }
+  
+      const usuario = rows[0];
+  
+      // Validar la contraseña en texto plano
+      if (password !== usuario.usrPassword) {
+        res.status(401).json({ message: "Contraseña incorrecta" });
+        return;
+      }
+  
+      // Enviar una respuesta con los datos del usuario, excluyendo la contraseña
+      res.json({
+        id: usuario.id,
+        email: usuario.email,
+        direccion: usuario.direccion,
+        role: usuario.usrRole,
+        message: "Inicio de sesión exitoso",
+      });
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error);
+      res.status(500).json({ message: "Error interno del servidor" });
+    }
+  };
+
+  export const createUsr = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { id, email, usrPassword, direccion } = req.body;
+  
+      // Validación básica
+      if (!id || !email || !usrPassword || !direccion) {
+        res.status(400).json({ message: "Todos los campos son obligatorios" });
+        return;
+      }
+  
+      // Consulta SQL para insertar el nuevo usuario
+      const query = `
+        INSERT INTO usuarios (id, email, usrPassword, direccion) 
+        VALUES (?, ?, ?, ?)
+      `;
+  
+      const [result] = await db.query<ResultSetHeader>(query, [id, email, usrPassword, direccion]);
+  
+      // Responder con éxito y el ID del nuevo usuario
+      res.status(201).json({
+        message: "Usuario creado exitosamente",
+        userId: result.insertId,
+      });
+    } catch (error: any) {
+      console.error("Error al crear el usuario:", error);
+  
+      // Manejo de errores comunes, como un email duplicado
+      if (error.code === "ER_DUP_ENTRY") {
+        res.status(409).json({ message: "El correo electrónico ya está registrado" });
+        return;
+      }
+  
+      res.status(500).json({ message: "Error interno del servidor" });
+    }
+  };
