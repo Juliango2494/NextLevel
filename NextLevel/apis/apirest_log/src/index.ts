@@ -25,10 +25,11 @@ db.connect((err) => {
   }
 });
 
-// Middleware para mejorar la seguridad y procesar JSON
+
 app.use(helmet());
-app.use(cors()); // Habilitar CORS para permitir solicitudes del frontend
-app.use(express.json()); // Middleware para parsear JSON
+app.use(cors()); 
+app.use(express.json()); 
+app.use(express.urlencoded({extended: true}));
 
 // Rutas de autenticación
 app.use("/api/auth", authRoutes);
