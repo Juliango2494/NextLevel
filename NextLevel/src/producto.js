@@ -1,8 +1,29 @@
 const API_URL = 'http://localhost:3000/products';
 
-//let rolUsr = 'administrador'
-let rolUsr = 'usuario'
+let rolUsr = 'administrador'
+//let rolUsr = 'usuario'
+let filtro = '';
+// Leer el parámetro de la URL al cargar la página
+const params = new URLSearchParams(window.location.search);
+const categoriaSeleccionada = params.get('categoria');
+if (categoriaSeleccionada) {
+  filtro = categoriaSeleccionada; // Establecer el filtro según el parámetro
+}
 
+const productSelect = document.getElementById('product-select');
+if (categoriaSeleccionada) {
+  productSelect.value = categoriaSeleccionada;
+}
+
+productSelect.addEventListener('change', (event) => {
+  filtro = event.target.value;
+
+  // Actualizar la URL para reflejar la selección
+  const newUrl = `${window.location.pathname}?categoria=${filtro}`;
+  window.history.pushState({ path: newUrl }, '', newUrl);
+
+  fetchProducts();
+});
     // Mostrar el modal
     const modal = document.getElementById('modal');
     const overlay = document.getElementById('modal-overlay');
@@ -23,7 +44,12 @@ let rolUsr = 'usuario'
     // Obtener productos
     async function fetchProducts() {
       try {
-        const response = await fetch(API_URL);
+        let endpoint = API_URL; // URL base: todos los productos
+        if (filtro === 'sillas-gamer') endpoint = `${API_URL}/sillas`;
+        else if (filtro === 'equipos') endpoint = `${API_URL}/equipos`;
+        else if (filtro === 'accesorios') endpoint = `${API_URL}/accesorios`;
+
+        const response = await fetch(endpoint);
         const products = await response.json();
         const productList = document.getElementById('productList');
         productList.innerHTML = ''; // Limpiar el contenedor

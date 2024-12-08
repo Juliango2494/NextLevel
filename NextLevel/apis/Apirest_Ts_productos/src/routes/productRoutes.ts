@@ -8,6 +8,9 @@ const upload = multer({ storage }); // Configuración de Multer
 const router = Router();
 
 router.get("/", ctrl.getAllProducts);
+router.get("/sillas", ctrl.getSillas);
+router.get("/equipos", ctrl.getEquipos);
+router.get("/accesorios", ctrl.getAccesorios);
 router.get("/:id", ctrl.getProductById);
 router.post("/", upload.single("image"), ctrl.createProduct);
 router.put("/:id", upload.single("image"), ctrl.updateProduct);
