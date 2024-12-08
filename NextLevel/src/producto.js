@@ -1,7 +1,7 @@
 const API_URL = 'http://localhost:3000/products';
 
-//let rolUsr = 'administrador'
-let rolUsr = 'usuario'
+let rolUsr = 'administrador'
+//let rolUsr = 'usuario'
 let filtro = '';
 // Leer el parámetro de la URL al cargar la página
 const params = new URLSearchParams(window.location.search);
