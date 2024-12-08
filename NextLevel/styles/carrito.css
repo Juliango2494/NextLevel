@@ -18,8 +18,7 @@
     border: 2px solid var(--primary-color);
     border-radius: 12px;
     padding: 25px;
-    width: 90%;
-    max-width: 1200px;
+    width: 20%;
     margin: 30px auto;
     box-shadow: 
         0 0 10px var(--glow-color), 

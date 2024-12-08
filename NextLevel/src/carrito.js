@@ -1,3 +1,112 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const cartItemsContainer = document.getElementById("cartItems");
+    const emptyCartButton = document.querySelector(".empty-cart-btn");
+    const checkoutButton = document.querySelector(".checkout-btn");
+    const subtotalElement = document.querySelector(".subtotal");
+    const ivaElement = document.querySelector(".iva");
+    const totalElement = document.querySelector(".total");
+    const carritoModal = document.querySelector(".carrito_modal");
+    const carritoCerrarModal = document.querySelector(".carrito_boton-cerrar");
+    const carritoResumen = document.querySelector(".carrito_resumen");
+
+    function formatNumber(number) {
+        return number.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); // 'es-ES' es para España, usa 'es-LA' para LATAM si prefieres
+    }
+    
+// Función para actualizar el carrito
+function loadCart() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartItemsContainer = document.getElementById("cartItems"); // Asegúrate que este contenedor esté en tu HTML
+    const subtotalElement = document.querySelector(".subtotal"); // Asegúrate que esta clase esté en tu HTML
+    const ivaElement = document.querySelector(".iva"); // Asegúrate que esta clase esté en tu HTML
+    const totalElement = document.querySelector(".total"); // Asegúrate que esta clase esté en tu HTML
+
+    cartItemsContainer.innerHTML = ""; // Limpiar el carrito antes de cargarlo
+    let subtotal = 0;
+
+    cart.forEach((item, index) => {
+        // Crear elementos para cada producto
+        const itemDiv = document.createElement("div");
+        itemDiv.classList.add("cart-item");
+
+        itemDiv.innerHTML = `
+            <h4>${item.name}</h4>
+            <p>Precio: $${formatNumber(item.price)} COP</p>
+            <p>Cantidad: ${item.quantity}</p>
+            <p>Total: $${formatNumber(item.total)} COP</p>
+            <button class="remove-btn" data-index="${index}">Eliminar</button>
+        `;
+
+        // Mostrar el producto en el carrito
+        cartItemsContainer.appendChild(itemDiv);
+
+        // Sumar al subtotal
+        subtotal += parseFloat(item.total);
+    });
+
+    // Calcular IVA y total
+    const iva = subtotal * 0.19;
+    const total = subtotal + iva;
+
+    // Mostrar valores en la UI con formato
+    subtotalElement.textContent = `$${formatNumber(subtotal.toFixed(2))} COP`;
+    ivaElement.textContent = `$${formatNumber(iva.toFixed(2))} COP`;
+    totalElement.textContent = `$${formatNumber(total.toFixed(2))} COP`;
+}
+
+    // Eliminar un producto del carrito
+    cartItemsContainer.addEventListener("click", (event) => {
+        if (event.target.classList.contains("remove-btn")) {
+            const index = event.target.getAttribute("data-index");
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.splice(index, 1); // Eliminar el producto seleccionado
+            localStorage.setItem("cart", JSON.stringify(cart));
+            loadCart(); // Recargar el carrito
+        }
+    });
+
+    // Vaciar el carrito
+    emptyCartButton.addEventListener("click", () => {
+        localStorage.removeItem("cart");
+        loadCart(); // Recargar el carrito
+    });
+
+    // Comprar y verificar usuario
+    checkoutButton.addEventListener("click", () => {
+        const usuario = JSON.parse(localStorage.getItem('usuario'));
+
+        if (!usuario) {
+            alert("Por favor, inicia sesión para realizar la compra.");
+            return;
+        }
+
+        // Mostrar modal con la información de la compra
+        carritoModal.style.display = "block";
+
+        // Resumen de la compra
+        carritoResumen.innerHTML = `
+            <p><strong>ID:</strong> ${usuario.id}</p>
+            <p><strong>Email:</strong> ${usuario.email}</p>
+            <p><strong>Dirección:</strong> ${usuario.direccion}</p>
+            <p><strong>Total Compra:</strong> $${totalElement.textContent}</p>
+        `;
+    });
+
+    // Cerrar el modal
+    carritoCerrarModal.addEventListener("click", () => {
+        carritoModal.style.display = "none";
+    });
+
+    // Inicializar carrito
+    loadCart();
+});
+
+
+
+
+
+
+
 // función para añadir efectos visuales y mejorar la experiencia de usuario
 document.addEventListener('DOMContentLoaded', () => {
     // añadir efectos de animación a los elementos del carrito

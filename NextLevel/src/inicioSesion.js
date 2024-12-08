@@ -6,9 +6,9 @@ window.addEventListener('DOMContentLoaded', function() {
     if (usuario) {
       // Mostrar la información del usuario
       userInfoContainer.innerHTML = `
-        <h1>Bienvenido, ${usuario.email}</h1>
-        <p>Dirección: ${usuario.direccion}</p>
-        <p>Rol: ${usuario.role}</p>
+        <h1>Bienvenido, ${usuario.email}</h1><br><br>
+        <p>Dirección: ${usuario.direccion}</p><br>
+        <p>Rol: ${usuario.role}</p><br>
         <button id="logoutBtn">Cerrar sesión</button>
       `;
   
