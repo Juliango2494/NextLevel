@@ -28,6 +28,73 @@ export const getAllProducts = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Error al obtener los productos" });
   }
 };
+export const getSillas = async (req: Request, res: Response) => {
+  try {
+    const [rows] = await db.query<RowDataPacket[]>("SELECT * FROM productos_tienda where category='sillas-gamer'");
+
+    // Convertir las imágenes BLOB a base64
+    const products = rows.map((product) => {
+      return {
+        id: product.id,
+        name: product.name_p,
+        cat: product.category,
+        description: product.description_p,
+        price: product.price,
+        image: product.image ? Buffer.from(product.image).toString("base64") : null, 
+      };
+    });
+
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al obtener filtro 'sillas-gamer'" });
+  }
+};
+export const getEquipos = async (req: Request, res: Response) => {
+  try {
+    const [rows] = await db.query<RowDataPacket[]>("SELECT * FROM productos_tienda where category='equipos'");
+
+    // Convertir las imágenes BLOB a base64
+    const products = rows.map((product) => {
+      return {
+        id: product.id,
+        name: product.name_p,
+        cat: product.category,
+        description: product.description_p,
+        price: product.price,
+        image: product.image ? Buffer.from(product.image).toString("base64") : null, 
+      };
+    });
+
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al obtener filtro 'equipos'" });
+  }
+};
+export const getAccesorios = async (req: Request, res: Response) => {
+  try {
+    const [rows] = await db.query<RowDataPacket[]>("SELECT * FROM productos_tienda where category='accesorios'");
+
+    // Convertir las imágenes BLOB a base64
+    const products = rows.map((product) => {
+      return {
+        id: product.id,
+        name: product.name_p,
+        cat: product.category,
+        description: product.description_p,
+        price: product.price,
+        image: product.image ? Buffer.from(product.image).toString("base64") : null, 
+      };
+    });
+
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al obtener filtro 'accesorios'" });
+  }
+};
+
 
 export const getProductById = async (
   req: Request<{ id: string }>, // Se asegura que "id" sea parte de los parámetros de la URL
