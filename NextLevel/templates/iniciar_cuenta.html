@@ -23,7 +23,7 @@
             <ul>
                 <li><a href="/index.html">HOME</a></li>
                 <li><a href="/templates/tienda.html">TIENDA</a></li>
-                <li><a href="">EVENTOS</a></li>
+                <li><a href="/templates/eventos.html">EVENTOS</a></li>
                 <li><a href="/">ACCEDE A CONTENIDO EXCLUSIVO</a></li>
             </ul>
         </nav>
@@ -47,22 +47,40 @@
               </form>
               
               <script>
-                document.getElementById("registerForm").addEventListener("submit", async (event) => {
-                  event.preventDefault();
+                document.getElementById("registerForm").addEventListener("submit", async function (event) {
+                  event.preventDefault(); // Previene la recarga de la página al enviar el formulario
               
+                  // Captura los valores de los campos del formulario
                   const nombre = document.getElementById("nombre").value;
                   const password = document.getElementById("password").value;
               
-                  const response = await fetch("http://localhost:5000/api/auth/register", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ nombre, password }),
-                  });
+                  try {
+                    // Envía los datos al servidor usando fetch
+                    const response = await fetch("http://localhost:5000/api/auth/register", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({ nombre, password }), // Convierte los datos a JSON
+                    });
               
-                  const data = await response.json();
-                  alert(data.message);
+                    // Procesa la respuesta del servidor
+                    if (response.ok) {
+                      const data = await response.json();
+                      alert(data.message); // Muestra el mensaje de éxito del servidor
+                    } else {
+                      // Si ocurre un error en el servidor, muestra un mensaje de error
+                      const errorData = await response.json();
+                      alert(`Error: ${errorData.message}`);
+                    }
+                  } catch (error) {
+                    // Manejo de errores de red o de fetch
+                    console.error("Error al registrar:", error);
+                    alert("Hubo un error al intentar registrar. Por favor, inténtalo de nuevo.");
+                  }
                 });
               </script>
+              
               
             </div>   
             
