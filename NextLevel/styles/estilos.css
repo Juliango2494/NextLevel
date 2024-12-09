@@ -22,7 +22,7 @@ nav ul li{
 }
 nav ul li a{
     color: rgb(0, 252, 239); /*color de fuente*/
-    font-size: 0.8em;  /*tamaño de la fuente*/
+    font-size: 16px;  /*tamaño de la fuente*/
     text-decoration: none; /*decoracion de texto= ninguna*/
 }
 a:hover{
@@ -43,6 +43,7 @@ a:hover{
 .primera-parte{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background-color: black;
     border-bottom: 4px rgb(255, 8, 193) solid;  
     width: 100%;
@@ -121,7 +122,7 @@ a:hover{
 
 }
 .imagen1{
-    width: 350px;
+    width: 250px;
     padding-bottom: 15px;
 }
 .imagen2{
@@ -131,7 +132,7 @@ a:hover{
     background-color: aliceblue;
     margin-bottom: 7px;
     border-radius: 8px;
-    padding: 30px;
+    padding: 1%;
 }
 .mouse{
     background-color: aliceblue;
@@ -231,7 +232,7 @@ label {
 }
 
 input {
-    width: 100%;
+    width: 80%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
@@ -382,7 +383,7 @@ button {
     
   }
   #modal form select{
-    width: 106%;
+    width: 86%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
@@ -437,8 +438,58 @@ button {
     color: #333;
 }
 .textoModalCompra{
-    width: 106%;
+    width: 86%;
     border: 1px solid #ccc;
     border-radius:3px;
     min-height: 100px;
+}
+
+/*CSS CARRUSEL INDEX*/
+
+.productos-carrusel {
+    text-align: center;
+    margin: 20px auto;
+}
+
+.carousel {
+    position: relative;
+    width: 90%;
+    
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.carousel-track-container {
+    overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-track img {
+    height: 180px;
+    margin: 0 10px;
+    border-radius: 5px;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.carousel-btn.prev {
+    left: 0;
+}
+
+.carousel-btn.next {
+    right: 0;
 }
