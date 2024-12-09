@@ -7,6 +7,7 @@ body{
     font-family: "Abel", sans-serif;
     font-weight: 400;
     font-style: normal;
+    background-color: black;
       
 }
 nav{
@@ -364,18 +365,29 @@ button {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
-    padding: 20px;
+    padding: 2%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1000;
     border-radius: 8px;
-    width: 90%; /* Ajustar según el tamaño del contenido */
-    max-width: 500px; /* Limita el tamaño máximo */
+    width: 15%; /* Ajustar según el tamaño del contenido */
+    
 }
 
   #modal form {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 10px;
+    padding: 2%;
+    
+  }
+  #modal form select{
+    width: 106%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius:3px;
+    color: #616060;
   }
 
   #modal-overlay {
@@ -388,9 +400,7 @@ button {
     background-color: rgba(0, 0, 0, 0.5); /* Oscurece el fondo */
     z-index: 999; /* Detrás del modal */
 }
-  .tiendaContainer{
-    background-color: white;
-  }
+
   .card .quantity-selector {
     display: none;
     align-items: center;
@@ -425,4 +435,10 @@ button {
     border-radius: 4px;
     background-color: #fff;
     color: #333;
+}
+.textoModalCompra{
+    width: 106%;
+    border: 1px solid #ccc;
+    border-radius:3px;
+    min-height: 100px;
 }
