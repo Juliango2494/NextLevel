@@ -181,6 +181,8 @@ footer{
 }
 .pt-tienda2{
     background-color: black;
+    min-height: 75vh;
+    margin-bottom: -10vh;
 }   
 .producto{
     height: 250px;
@@ -492,4 +494,10 @@ button {
 
 .carousel-btn.next {
     right: 0;
+}
+.bodyCarrito{
+    display: flex;
+    align-items: center;
+    background-color: black;
+    min-height: 75vh;
 }
