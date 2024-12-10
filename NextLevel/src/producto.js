@@ -1,9 +1,15 @@
 const API_URL = 'http://localhost:3000/products';
 
 const usuario = JSON.parse(localStorage.getItem('usuario'));
+const usuarioLog = document.getElementById('usuarioLog');
+
+if (usuario) {
+  usuarioLog.textContent = usuario.email; // Agrega el email del usuario al contenido de la etiqueta <p>
+} else {
+  usuarioLog.textContent = ''; // Asegura que esté vacío si no hay usuario
+}
 
 let rolUsr= 'usuario'
-  
     // Verificar si hay datos de usuario en localStorage
     if (usuario){
       rolUsr=usuario.role 
@@ -217,7 +223,7 @@ productSelect.addEventListener('change', (event) => {
     
 
     // Crear producto
-    document.getElementById('productForm').addEventListener('submit', async (event) => {
+  /*  document.getElementById('productForm').addEventListener('submit', async (event) => {
       event.preventDefault();
       const formData = new FormData(event.target);
       try {
@@ -232,6 +238,6 @@ productSelect.addEventListener('change', (event) => {
       } catch (error) {
         console.error('Error al crear producto:', error);
       }
-    });
+    });*/
 
     fetchProducts();

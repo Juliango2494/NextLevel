@@ -14,6 +14,15 @@ document.addEventListener("DOMContentLoaded", () => {
         return number.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    const usuarioLog = document.getElementById('usuarioLog');
+
+    if (usuario) {
+    usuarioLog.textContent = usuario.email; // Agrega el email del usuario al contenido de la etiqueta <p>
+    } else {
+    usuarioLog.textContent = ''; // Asegura que esté vacío si no hay usuario
+    }
+
     // Función para actualizar el carrito
     function loadCart() {
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -71,10 +80,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Mostrar el modal con los datos del usuario y total
     checkoutButton.addEventListener("click", () => {
-        const usuario = JSON.parse(localStorage.getItem('usuario'));
 
         if (!usuario) {
             alert("Por favor, inicia sesión para realizar la compra.");
+            window.location.href = '/templates/usuario.html';
             return;
         }
 

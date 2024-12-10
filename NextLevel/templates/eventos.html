@@ -30,15 +30,25 @@
         <div class="logos-nav">
             <a href="/templates/carrito.html"><i class="fa-solid fa-cart-shopping"></i></a>
             <a href="/templates/usuario.html"><i class="fa-regular fa-user"></i></a>
-
+            <a href="usuario.html" id="usuarioLog" class="usuarioLog"></a>
         </div>
     </div>
     <div class="banner">
        <video src="../assets/img/🕹️🕹️FREE FIRE - NUEVO PASE ELITE_ LOCURA GAMER🕹️🕹️.mp4" 
-       height="600" width="1100" controls autoplay></video>
+       height="700" width="2100" controls autoplay></video>
     </div>
     <footer>
         derechosReservadosNext_Level&copf;        
     </footer>
+    <script>
+        const usuario = JSON.parse(localStorage.getItem('usuario'));
+        const usuarioLog = document.getElementById('usuarioLog');
+
+        if (usuario) {
+        usuarioLog.textContent = usuario.email; // Agrega el email del usuario al contenido de la etiqueta <p>
+        } else {
+        usuarioLog.textContent = ''; // Asegura que esté vacío si no hay usuario
+        }
+    </script>
 </body>
 </html>

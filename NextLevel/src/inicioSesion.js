@@ -1,9 +1,10 @@
 window.addEventListener('DOMContentLoaded', function() {
     const userInfoContainer = document.getElementById('userInfoContainer');
     const usuario = JSON.parse(localStorage.getItem('usuario'));
-  
+    const usuarioLog = document.getElementById('usuarioLog');
     // Verificar si hay datos de usuario en localStorage
     if (usuario) {
+      usuarioLog.textContent = usuario.email; // Agrega el email del usuario al contenido de la etiqueta <p>
       // Mostrar la información del usuario
       userInfoContainer.innerHTML = `
         <h1>Bienvenido, ${usuario.email}</h1><br><br>
@@ -21,6 +22,7 @@ window.addEventListener('DOMContentLoaded', function() {
         window.location.href = '/templates/usuario.html';
       });
     } else {
+      usuarioLog.textContent = ''; // Asegura que esté vacío si no hay usuario
       // Si no hay datos de usuario, mostrar el formulario de inicio de sesión
       userInfoContainer.innerHTML = `
         <h1>Iniciar Sesión</h1>

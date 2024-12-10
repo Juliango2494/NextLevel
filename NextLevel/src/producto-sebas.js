@@ -15,6 +15,15 @@ ScrollReveal().reveal(".productos-exhibicion h2", {
 
 const API_URL = 'http://localhost:3000/products';
 
+const usuario = JSON.parse(localStorage.getItem('usuario'));
+const usuarioLog = document.getElementById('usuarioLog');
+
+if (usuario) {
+  usuarioLog.textContent = usuario.email; // Agrega el email del usuario al contenido de la etiqueta <p>
+} else {
+  usuarioLog.textContent = ''; // Asegura que esté vacío si no hay usuario
+}
+
 async function fetchProductsForCarousel() {
     try {
         const response = await fetch(API_URL);
